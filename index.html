@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amplop Valentine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Background hitam */
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: absolute;
+            width: 250px;
+            height: 200px;
+            cursor: pointer;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        /* Tombol kontrol musik */
+        #music-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Musik latar belakang (dimulai dalam keadaan mute) -->
+    <audio id="bg-music" autoplay loop muted>
+        <source src="lagu.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung audio.
+    </audio>
+
+    <!-- Tombol kontrol musik -->
+    <button id="music-btn" onclick="toggleMusic()">🔊 Musik Hidup</button>
+
+    <div class="container" onclick="openEnvelope()">
+        <div class="flap"></div>
+        <div class="envelope"></div>
+        <div class="message">
+            Selamat Hari Valentine Sayang ❤️<br>
+            Dari Ilham (Khusus yang Jomblo)
+        </div>
+    </div>
+
+    <script>
+        var music = document.getElementById("bg-music");
+        var musicBtn = document.getElementById("music-btn");
+
+        // Pastikan musik diputar setelah interaksi pertama
+        document.body.addEventListener("click", function() {
+            if (music.muted) {
+                music.muted = false;
+                music.play();
+            }
+        });
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicBtn.innerHTML = "🔊 Musik Hidup";
+            } else {
+                music.pause();
+                musicBtn.innerHTML = "🔇 Musik Mati";
+            }
+        }
+    </script>
+
+</body>
+</html>
