@@ -6,7 +6,6 @@
     <title>Amplop Valentine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Background hitam */
         body {
             background-color: black;
             display: flex;
@@ -31,7 +30,6 @@
             z-index: 5;
         }
 
-        /* Amplop bawah */
         .envelope {
             position: absolute;
             width: 100%;
@@ -42,7 +40,6 @@
             z-index: 2;
         }
 
-        /* Tutup amplop */
         .flap {
             position: absolute;
             width: 100%;
@@ -54,7 +51,6 @@
             z-index: 4;
         }
 
-        /* Hewan di dalam amplop */
         .cute-animal {
             position: absolute;
             width: 80px;
@@ -66,13 +62,11 @@
             z-index: 3;
         }
 
-        /* Animasi hewan tetap bergerak */
         @keyframes bounce {
             0% { transform: translate(-50%, 0%) scale(1); }
             100% { transform: translate(-50%, -10px) scale(1.1); }
         }
 
-        /* Kertas pesan */
         .message {
             position: absolute;
             width: 90%;
@@ -93,7 +87,6 @@
             z-index: 5;
         }
 
-        /* Saat amplop dibuka */
         .open .flap {
             transform: rotateX(180deg);
             z-index: 1;
@@ -113,7 +106,6 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Tombol kontrol musik */
         #music-btn {
             position: absolute;
             top: 20px;
@@ -127,7 +119,6 @@
             z-index: 10;
         }
 
-        /* Animasi pasangan hewan berlari */
         .running-animals {
             position: absolute;
             bottom: 10px;
@@ -138,13 +129,11 @@
             z-index: 5;
         }
 
-        /* Animasi lari dari kiri ke kanan */
         @keyframes runAcross {
             0% { left: -200px; }
             100% { left: 100vw; }
         }
 
-        /* Hujan love */
         .heart {
             position: absolute;
             color: red;
@@ -157,17 +146,35 @@
             0% { transform: translateY(-150px) translateX(0); opacity: 1; }
             100% { transform: translateY(100vh) translateX(30px); opacity: 0; }
         }
+
+        /* Bunga di setiap sisi */
+        .flower {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            animation: wiggle 3s infinite alternate ease-in-out;
+        }
+
+        /* Animasi bunga bergerak pelan */
+        @keyframes wiggle {
+            0% { transform: rotate(-5deg) scale(1); }
+            100% { transform: rotate(5deg) scale(1.1); }
+        }
+
+        .flower-top-left { top: 10px; left: 10px; }
+        .flower-top-right { top: 10px; right: 10px; }
+        .flower-bottom-left { bottom: 10px; left: 10px; }
+        .flower-bottom-right { bottom: 10px; right: 10px; }
+
     </style>
 </head>
 <body>
 
-    <!-- Musik latar belakang (dimulai dalam keadaan mute) -->
     <audio id="bg-music" autoplay loop muted>
         <source src="lagu.mp3" type="audio/mpeg">
         Browser Anda tidak mendukung audio.
     </audio>
 
-    <!-- Tombol kontrol musik -->
     <button id="music-btn" onclick="toggleMusic()">🔊 Musik Hidup</button>
 
     <div class="container" onclick="openEnvelope()">
@@ -177,29 +184,34 @@
         <div class="message">
             Selamat Hari Valentine Sayang ❤️<br>
             Kamu adalah orang yang membuat hidupku penuh warna dan kebahagiaan. Aku sangat mencintaimu.
+            <br>
+            JOMBLO WKWKWWK
         </div>
     </div>
 
-    <!-- Pasangan hewan lari membawa balon love -->
     <img class="running-animals" src="balon.png" alt="Couple Animals with Love Balloon">
+
+    <!-- Tambahkan bunga di sudut-sudut halaman -->
+    <img class="flower flower-top-left" src="bunga.png" alt="Flower">
+    <img class="flower flower-top-right" src="bunga.png" alt="Flower">
+    <img class="flower flower-bottom-left" src="bunga.png" alt="Flower">
+    <img class="flower flower-bottom-right" src="bunga.png" alt="Flower">
 
     <script>
         function openEnvelope() {
             document.querySelector(".container").classList.toggle("open");
         }
 
-        // Fungsi membuat hujan love dari lebih atas
         function createHeart() {
             const heart = document.createElement("div");
             heart.innerHTML = "❤️";
             heart.classList.add("heart");
             document.body.appendChild(heart);
 
-            const size = Math.random() * 30 + 20 + "px";  // Ukuran hati (20px - 50px)
+            const size = Math.random() * 30 + 20 + "px";
             heart.style.fontSize = size;
-            heart.style.left = Math.random() * 100 + "vw"; 
-            heart.style.animationDuration = Math.random() * 3 + 2 + "s";  
-            heart.style.top = "-150px"; // Mulai lebih tinggi dari layar
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
 
             setTimeout(() => {
                 heart.remove();
@@ -208,11 +220,9 @@
 
         setInterval(createHeart, 200);
 
-        // Fungsi kontrol musik
         var music = document.getElementById("bg-music");
         var musicBtn = document.getElementById("music-btn");
 
-        // Pastikan musik diputar setelah interaksi pertama
         document.body.addEventListener("click", function() {
             if (music.muted) {
                 music.muted = false;
