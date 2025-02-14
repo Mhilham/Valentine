@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amplop Valentine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -31,62 +28,161 @@
             z-index: 5;
         }
 
-        /* Tombol kontrol musik */
-        #music-btn {
+        /* Amplop bawah */
+        .envelope {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            background-color: #ff4d6d;
             border-radius: 10px;
-            z-index: 10;
+            transition: transform 0.5s ease;
+            z-index: 2;
+        }
+
+        /* Tutup amplop */
+        .flap {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background-color: #ff758f;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transition: transform 0.5s ease;
+            transform-origin: top;
+            z-index: 4;
+        }
+
+        /* Kertas pesan */
+        .message {
+            position: absolute;
+            width: 90%;
+            height: 70%;
+            background-color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff4d6d;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateY(50%);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        /* Gambar hewan di tengah amplop */
+        .cute-animal {
+            position: absolute;
+            width: 80px;
+            bottom: 20px;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            opacity: 1;
+            animation: bounce 2s infinite alternate ease-in-out;
+            z-index: 3;
+        }
+
+        /* Animasi hewan tetap bergerak */
+        @keyframes bounce {
+            0% { transform: translate(-50%, 0%) scale(1); }
+            100% { transform: translate(-50%, -10px) scale(1.1); }
+        }
+
+        /* Saat amplop dibuka */
+        .open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .open .envelope {
+            transform: translateY(30px);
+        }
+
+        /* Teks lebih rendah agar lebih pas */
+        .open .message {
+            opacity: 1;
+            transform: translate(-50%, -140%);
+            z-index: 6;
+        }
+
+        /* Hewan tetap muncul di tengah amplop */
+        .open .cute-animal {
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animasi pasangan hewan berlari */
+        .running-animals {
+            position: absolute;
+            bottom: 10px;
+            left: -200px;
+            width: 200px;
+            height: auto;
+            animation: runAcross 6s linear infinite;
+            z-index: 5;
+        }
+
+        /* Animasi lari dari kiri ke kanan */
+        @keyframes runAcross {
+            0% { left: -200px; }
+            100% { left: 100vw; }
+        }
+
+        /* Hujan love */
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-150px) translateX(0); opacity: 1; }
+            100% { transform: translateY(100vh) translateX(30px); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Musik latar belakang (dimulai dalam keadaan mute) -->
-    <audio id="bg-music" autoplay loop muted>
-        <source src="lagu.mp3" type="audio/mpeg">
-        Browser Anda tidak mendukung audio.
-    </audio>
-
-    <!-- Tombol kontrol musik -->
-    <button id="music-btn" onclick="toggleMusic()">🔊 Musik Hidup</button>
-
     <div class="container" onclick="openEnvelope()">
+        <img class="cute-animal" src="hewan.png" alt="Cute Animal">
         <div class="flap"></div>
         <div class="envelope"></div>
         <div class="message">
             Selamat Hari Valentine Sayang ❤️<br>
-            Dari Ilham (Khusus yang Jomblo)
+         Kamu adalah orang yang membuat hidupku penuh warna dan kebahagiaan. Aku sangat mencintaimu."
         </div>
     </div>
 
+    <!-- Pasangan hewan lari membawa balon love -->
+    <img class="running-animals" src="balon.png" alt="Couple Animals with Love Balloon">
+
     <script>
-        var music = document.getElementById("bg-music");
-        var musicBtn = document.getElementById("music-btn");
-
-        // Pastikan musik diputar setelah interaksi pertama
-        document.body.addEventListener("click", function() {
-            if (music.muted) {
-                music.muted = false;
-                music.play();
-            }
-        });
-
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                musicBtn.innerHTML = "🔊 Musik Hidup";
-            } else {
-                music.pause();
-                musicBtn.innerHTML = "🔇 Musik Mati";
-            }
+        function openEnvelope() {
+            document.querySelector(".container").classList.toggle("open");
         }
+
+        // Fungsi membuat hujan love dari lebih atas
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.classList.add("heart");
+            document.body.appendChild(heart);
+
+            const size = Math.random() * 30 + 20 + "px";  // Ukuran hati (20px - 50px)
+            heart.style.fontSize = size;
+            heart.style.left = Math.random() * 100 + "vw"; 
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";  
+            heart.style.top = "-150px"; // Mulai lebih tinggi dari layar
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 200);
     </script>
 
 </body>
