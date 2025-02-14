@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amplop Valentine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -51,6 +54,24 @@
             z-index: 4;
         }
 
+        /* Hewan di dalam amplop */
+        .cute-animal {
+            position: absolute;
+            width: 80px;
+            bottom: 30px;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            opacity: 1;
+            animation: bounce 2s infinite alternate ease-in-out;
+            z-index: 3;
+        }
+
+        /* Animasi hewan tetap bergerak */
+        @keyframes bounce {
+            0% { transform: translate(-50%, 0%) scale(1); }
+            100% { transform: translate(-50%, -10px) scale(1.1); }
+        }
+
         /* Kertas pesan */
         .message {
             position: absolute;
@@ -72,24 +93,6 @@
             z-index: 5;
         }
 
-        /* Gambar hewan di tengah amplop */
-        .cute-animal {
-            position: absolute;
-            width: 80px;
-            bottom: 20px;
-            left: 50%;
-            transform: translate(-50%, 0%);
-            opacity: 1;
-            animation: bounce 2s infinite alternate ease-in-out;
-            z-index: 3;
-        }
-
-        /* Animasi hewan tetap bergerak */
-        @keyframes bounce {
-            0% { transform: translate(-50%, 0%) scale(1); }
-            100% { transform: translate(-50%, -10px) scale(1.1); }
-        }
-
         /* Saat amplop dibuka */
         .open .flap {
             transform: rotateX(180deg);
@@ -100,16 +103,28 @@
             transform: translateY(30px);
         }
 
-        /* Teks lebih rendah agar lebih pas */
         .open .message {
             opacity: 1;
             transform: translate(-50%, -140%);
             z-index: 6;
         }
 
-        /* Hewan tetap muncul di tengah amplop */
         .open .cute-animal {
             transform: translate(-50%, -50%);
+        }
+
+        /* Tombol kontrol musik */
+        #music-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            z-index: 10;
         }
 
         /* Animasi pasangan hewan berlari */
@@ -146,13 +161,22 @@
 </head>
 <body>
 
+    <!-- Musik latar belakang (dimulai dalam keadaan mute) -->
+    <audio id="bg-music" autoplay loop muted>
+        <source src="lagu.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung audio.
+    </audio>
+
+    <!-- Tombol kontrol musik -->
+    <button id="music-btn" onclick="toggleMusic()">🔊 Musik Hidup</button>
+
     <div class="container" onclick="openEnvelope()">
         <img class="cute-animal" src="hewan.png" alt="Cute Animal">
         <div class="flap"></div>
         <div class="envelope"></div>
         <div class="message">
             Selamat Hari Valentine Sayang ❤️<br>
-         Kamu adalah orang yang membuat hidupku penuh warna dan kebahagiaan. Aku sangat mencintaimu."
+            Kamu adalah orang yang membuat hidupku penuh warna dan kebahagiaan. Aku sangat mencintaimu.
         </div>
     </div>
 
@@ -183,6 +207,28 @@
         }
 
         setInterval(createHeart, 200);
+
+        // Fungsi kontrol musik
+        var music = document.getElementById("bg-music");
+        var musicBtn = document.getElementById("music-btn");
+
+        // Pastikan musik diputar setelah interaksi pertama
+        document.body.addEventListener("click", function() {
+            if (music.muted) {
+                music.muted = false;
+                music.play();
+            }
+        });
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicBtn.innerHTML = "🔊 Musik Hidup";
+            } else {
+                music.pause();
+                musicBtn.innerHTML = "🔇 Musik Mati";
+            }
+        }
     </script>
 
 </body>
