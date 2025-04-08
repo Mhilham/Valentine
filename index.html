@@ -33,10 +33,10 @@
 
     .recipient-name {
       position: absolute;
-      top: -120px;
+      top: -160px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 56px;
+      font-size: 40px;
       font-family: 'Pacifico', cursive;
       font-weight: bold;
       background: linear-gradient(90deg, #ffffff, #FFD700, #f2d675);
@@ -45,6 +45,20 @@
       -webkit-text-fill-color: transparent;
       animation: shimmer 3s linear infinite;
       text-shadow: 2px 2px 6px rgba(255, 215, 0, 0.4);
+      z-index: 6;
+    }
+
+    .top-photo {
+      position: absolute;
+      top: -110px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       z-index: 6;
     }
 
@@ -202,6 +216,7 @@
 
   <div class="container" onclick="openEnvelope()">
     <div class="recipient-name">Jaskia</div>
+    <img class="top-photo" src="foto.png" alt="Foto Spesial">
     <img class="cute-animal" src="cute.png" alt="Cute Animal">
     <div class="flap"></div>
     <div class="envelope"></div>
